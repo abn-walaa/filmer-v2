@@ -1,15 +1,12 @@
 let express = require('express')
-const { it } = require('node:test')
 let app = express()
 const path = require('path')
 const request = require('request');
 let jsdom = require('jsdom');
-const { URLSearchParams } = require('url');
 const publicDirectoryPath = path.join(__dirname, '../public')
 let fs = require('fs');
 let hbs = require('hbs')
-const exp = require('constants');
-const e = require('express');
+
 app.use(express.static(publicDirectoryPath))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))

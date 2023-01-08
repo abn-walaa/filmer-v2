@@ -65,8 +65,10 @@ app.get('/watch/:id', async (req, res) => {
     })
     res.render('video', { h1: url.data[0], html, sub, title: url.title })
 })
-let port = process.env.PORT || 3000
-app.listen(port)
+let port = process.env.PORT || 888
+app.listen(port, () => {
+    console.log('server runing on ' + port)
+})
 
 
 

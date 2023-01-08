@@ -5,12 +5,13 @@ const request = require('request');
 let jsdom = require('jsdom');
 const publicDirectoryPath = path.join(__dirname, '../public')
 let fs = require('fs');
-let hbs = require('hbs')
-
+let hbs = require('hbs');
+const { urlencoded } = require('express');
+let bodyPareser = require('body-parser')
 app.use(express.static(publicDirectoryPath))
 app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-
+app.use(express.urlencoded({ extended: false }))
+app.use(bodyPareser.urlencoded({ extended: false }))
 const viewsPath = path.join(__dirname, '../public/')
 app.set('views', viewsPath)
 hbs.registerPartials(viewsPath)
@@ -34,7 +35,6 @@ app.post('/get/', async (req, res) => {
     } catch (error) {
         res.status(400).send()
     }
-
 })
 app.get('/watch/:id', async (req, res) => {
     let html = ''
@@ -66,7 +66,6 @@ let port = process.env.PORT || 888
 app.listen(port, () => {
     console.log('server runing on ' + port)
 })
-
 
 
 // f

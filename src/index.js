@@ -41,7 +41,7 @@ app.post('/get/', async (req, res) => {
 })
 app.get('/watch/:id', async (req, res) => {
     let html = ''
-    let url = await getvideo(encodeURI('https://mycimaaa.click/watch/' + req.params.id))
+    let url = await getvideo(encodeURI('https://myciiima.autos/watch/' + req.params.id))
     console.log(url)
     console.log(url.data)
     url.data.forEach(e => {
@@ -76,9 +76,9 @@ app.listen(port, () => {
 
 async function a(key) {
     let k = []
-    console.log('https://mycimaaa.click/AjaxCenter/Searching/' + key)
+    console.log('https://myciiima.autos/AjaxCenter/Searching/' + key)
     let s = await new Promise(async (resolve, reject) => {
-        request.get('https://mycimaaa.click/AjaxCenter/Searching/' + encodeURI(key), { json: true }, (e, re, body) => {
+        request.get('https://myciiima.autos/AjaxCenter/Searching/' + encodeURI(key), { json: true }, (e, re, body) => {
             if (e) {
                 return reject(e)
 

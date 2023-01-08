@@ -18,16 +18,18 @@ btn.onclick = async e => {
         } catch (error) {
 
         }
+
         let grid = document.createElement('div')
         grid.className = 'grid'
         e.forEach(e => {
+
             let div = document.createElement('div')
             let img = document.createElement('img')
             let h1 = document.createElement('h1')
             let btn = document.createElement('button')
             btn.className = 'goto'
             img.src = e.pic
-            btn.value = e.url.slice(29)
+            btn.value = encodeURI(e.url.slice(29))
             btn.textContent = 'WaTch'
             h1.textContent = e.title
             div.appendChild(img)

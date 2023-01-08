@@ -43,10 +43,17 @@ app.get('/watch/:id', async (req, res) => {
     let html = ''
     let url = await getvideo(encodeURI('https://mycimaaa.click/watch/' + req.params.id))
     console.log(url)
+    console.log(url.data)
     url.data.forEach(e => {
-        let v = e.match(/\.\d+p\./ig)[0]
-        console.log(v)
-        html += `<p class=${v} value=${e} id="q"> ${v} </p>`
+        let v;
+        try {
+            v = e.match(/\.\d+p\./ig)[0]
+            html += `<p class=${v} value=${e} id="q"> ${v} </p>`
+        } catch (error) {
+            v = e
+
+        }
+
     });
     let sub = '';
     url.sub.forEach(e => {
@@ -58,7 +65,8 @@ app.get('/watch/:id', async (req, res) => {
     })
     res.render('video', { h1: url.data[0], html, sub, title: url.title })
 })
-app.listen(3000)
+let port = process.env.PROT || 3000
+app.listen(port)
 
 
 

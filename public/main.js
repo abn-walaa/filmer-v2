@@ -4,15 +4,20 @@ let btn2 = document.querySelector('button:not(.h2)')
 let div = document.querySelector('.h')
 let grid = document.querySelector('.grid')
 let loading = document.querySelector('.text')
-btn.onclick = e => {
+btn.onclick = async e => {
     // btn.setAttribute('disabled', ' ')
     btn.setAttribute('disabled', '')
     loading.textContent = 'جاري البحث....'
-    fetch('/serach/', {
+    await fetch('/serach/', {
         headers: {
             'Content-Type': 'application/json'
         }, method: 'post', body: JSON.stringify({ item: inputText.value })
     }).then(e => e.json()).then(e => {
+        try {
+            document.querySelector('.grid').remove()
+        } catch (error) {
+
+        }
         let grid = document.createElement('div')
         grid.className = 'grid'
         e.forEach(e => {

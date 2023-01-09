@@ -47,5 +47,4 @@ document.addEventListener('click', e => {
     if (e.target.className === "goto") {
         window.open('/watch/' + e.target.value, "_blank")
     }
-
 })

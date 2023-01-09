@@ -21,7 +21,15 @@
         <p class="text"></p>
     </div>
     <script src='main.js'></script>
-
+    <div class="grid">
+        {{#each data}}
+        <div>
+            <img src={{this.pic}} alt="">
+            <h1>{{this.title}}</h1>
+            <button class="goto" value={{this.url}}>WaTch</button>
+        </div>
+        {{/each}}
+    </div>
 
 </body>
 

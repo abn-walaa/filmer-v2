@@ -13,6 +13,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyPareser.urlencoded({ extended: false }))
 const viewsPath = path.join(__dirname, '../public/')
+
 app.set('views', viewsPath)
 hbs.registerPartials(viewsPath)
 app.post('/serach/', async (req, res) => {
@@ -35,6 +36,12 @@ app.post('/get/', async (req, res) => {
     } catch (error) {
         res.status(400).send()
     }
+})
+app.post('/file', async (req, res) => {
+    console.log(req.body)
+    let data = await a(req.body.sreach)
+    console.log(data)
+    res.render('v', { data })
 })
 app.get('/watch/:id', async (req, res) => {
     let html = ''
@@ -97,7 +104,7 @@ async function a(key) {
             Array.from(doc.window.document.querySelectorAll('.GridItem a')).map((e) => {
                 k.push({
                     title: e.textContent,
-                    url: e.href,
+                    url: e.href.slice(29),
                     pic: e.querySelector('span').getAttribute('data-lazy-style').split('(')[1].slice(0, -2)
                 })
             })
@@ -119,6 +126,7 @@ async function getvideo(url) {
             let k = []
             let doc = new jsdom.JSDOM(body, { contentType: "text/html" })
             Array.from(doc.window.document.querySelectorAll('.GridItem a')).map((e) => {
+
                 k.push({
                     title: e.textContent,
                     url: e.href,

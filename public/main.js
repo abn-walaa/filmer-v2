@@ -22,7 +22,8 @@ btn.onclick = async e => {
         let grid = document.createElement('div')
         grid.className = 'grid'
         e.forEach(e => {
-
+            console.log(encodeURI(e.url.slice(29)))
+            console.log(e.url.slice(29))
             let div = document.createElement('div')
             let img = document.createElement('img')
             let h1 = document.createElement('h1')

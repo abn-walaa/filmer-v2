@@ -71,7 +71,7 @@ async function getUrlsFimles() {
     }
 
 }
-getUrlsFimles()
+getINFO()
 
 async function getINFO() {
 
@@ -243,6 +243,8 @@ async function getINFO() {
                             }
 
                         } catch (error) {
+                            URLS[i].check = true
+                            await URLS[i].save()
                             console.log('https://cimaaa4u.store/' + URLS[i].url + '/')
                             console.log(error)
                         }
@@ -251,6 +253,9 @@ async function getINFO() {
                         console.log('asdasd')
                     } catch (error) {
                         console.log(error)
+                        URLS[i].error = true
+
+                        await URLS[i].save()
                         resolve()
                     }
 

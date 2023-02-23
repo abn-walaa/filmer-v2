@@ -9,6 +9,10 @@ let sac = new mongooes.Schema({
     check: {
         type: Boolean,
         default: false
+    },
+    error: {
+        type: Boolean,
+        default: false
     }
 })
 

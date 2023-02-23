@@ -216,7 +216,6 @@ async function getINFO() {
                                     if (error) {
                                         URLS[i].error = true
 
-                                        URLS[i].save()
                                         reject(error)
                                     }
                                     body = body2
@@ -224,7 +223,6 @@ async function getINFO() {
                                 })
                             } catch (error) {
                                 URLS[i].error = true
-
                                 URLS[i].save()
                                 reject(error)
                             }

@@ -214,16 +214,24 @@ async function getINFO() {
                                     "body": null,
                                 }, function (error, res, body2) {
                                     if (error) {
+                                        URLS[i].error = true
 
+                                        URLS[i].save()
                                         reject(error)
                                     }
                                     body = body2
                                     resolve(body2)
                                 })
                             } catch (error) {
+                                URLS[i].error = true
+
+                                URLS[i].save()
                                 reject(error)
                             }
-                        }).catch(e => console.log(e))
+                        }).catch(async e => {
+                            URLS[i].error = true
+                            await URLS[i].save()
+                        })
                         let document2 = new jsdom.JSDOM(body, { contentType: "text/html" }).window.document
                         // رابط التحميل من myvid
                         console.log('--------')

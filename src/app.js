@@ -215,7 +215,6 @@ async function getINFO() {
                                 }, function (error, res, body2) {
                                     if (error) {
                                         URLS[i].error = true
-
                                         reject(error)
                                     }
                                     body = body2
@@ -228,7 +227,6 @@ async function getINFO() {
                             }
                         }).catch(async e => {
                             URLS[i].error = true
-                            await URLS[i].save()
                         })
                         let document2 = new jsdom.JSDOM(body, { contentType: "text/html" }).window.document
                         // رابط التحميل من myvid
@@ -273,7 +271,6 @@ async function getINFO() {
             } catch (error) {
                 URLS[i].error = true
                 await URLS[i].save()
-
                 console.log(error)
                 reject('no')
             }

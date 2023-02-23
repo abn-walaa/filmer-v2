@@ -75,13 +75,14 @@ getINFO()
 
 async function getINFO() {
 
-    let URLS = await Urls.find({ check: false })
+    let URLS = await Urls.find({ check: { $ne: true }, error: { $ne: false } })
     for (let i = 0; i < URLS.length; i++) {
 
         await new Promise(async (resolve, reject) => {
             try {
                 let body;
                 await new Promise((resolve, reject) => {
+                    console.log('https://cimaaa4u.store/' + URLS[i].url + '/')
                     request.get('https://cimaaa4u.store/' + URLS[i].url + '/', {
                         json: true, "headers": {
                             "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
@@ -175,6 +176,9 @@ async function getINFO() {
                                 team.push({ name: theName, pic: urlPic })
                                 resolve('ok')
                             } catch (error) {
+                                URLS[i].error = true
+
+                                await URLS[i].save()
                                 reject('no')
                             }
                         }).catch(e => console.log(e))
@@ -261,8 +265,9 @@ async function getINFO() {
 
                 }
             } catch (error) {
+                URLS[i].error = true
+                await URLS[i].save()
 
-                console.log(i)
                 console.log(error)
                 reject('no')
             }

@@ -1,3 +1,3 @@
 let mongooes = require('mongoose')
 mongooes.set('strictQuery', false);
-mongooes.connect('mongodb://18.233.67.8:27017/filmerv3')
+mongooes.connect('mongodb://admin:KAb3747d@157.175.147.218:27017/filmerv3')

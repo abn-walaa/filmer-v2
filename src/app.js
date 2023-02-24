@@ -6,7 +6,7 @@ require('./db/conntion')
 let Urls = require('./db/module/urls')
 let Filme = require('./db/module/info')
 
-// getUrlsFimles()
+
 const request = require('request');
 async function getUrlsFimles() {
     console.log('hello')
@@ -14,7 +14,7 @@ async function getUrlsFimles() {
         try {
             let body;
             await new Promise((resolve, reject) => {
-                request.get('https://cima4u.mx/category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a-movies7-english/page/' + i + '/', {
+                request.get('https://cimaaa4u.click/category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a-movies7-english/page/' + i + '/', {
                     json: true, "headers": {
                         "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                         "accept-language": "en-US,en;q=0.9",
@@ -29,7 +29,7 @@ async function getUrlsFimles() {
                         "sec-fetch-user": "?1",
                         "upgrade-insecure-requests": "1",
                         "cookie": "_gid=GA1.2.1577721506.1675807477; _gat_gtag_UA_62776787_1=1; _ga_VX23CCW6PL=GS1.1.1675807476.1.1.1675810433.0.0.0; _ga=GA1.2.1227969633.1675807476",
-                        "Referer": "https://cima4u.mx/category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a-movies7-english/",
+                        "Referer": "https://cimaaa4u.click/category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a-movies7-english/",
                         "Referrer-Policy": "strict-origin-when-cross-origin"
                     },
                     "body": null,
@@ -75,7 +75,7 @@ getINFO()
 
 async function getINFO() {
 
-    let URLS = await Urls.find({ check: { $ne: true }, error: { $ne: false } })
+    let URLS = await Urls.find({ check: { $ne: true }, error: true })
     for (let i = 0; i < URLS.length; i++) {
 
         await new Promise(async (resolve, reject) => {
@@ -208,7 +208,7 @@ async function getINFO() {
                                         "sec-fetch-user": "?1",
                                         "upgrade-insecure-requests": "1",
                                         "cookie": "_gid=GA1.2.1577721506.1675807477; _gat_gtag_UA_62776787_1=1; _ga_VX23CCW6PL=GS1.1.1675807476.1.1.1675810433.0.0.0; _ga=GA1.2.1227969633.1675807476",
-                                        "Referer": "https://cima4u.mx/category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a-movies7-english/",
+                                        "Referer": "https://cimaaa4u.click/category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a-movies7-english/",
                                         "Referrer-Policy": "strict-origin-when-cross-origin"
                                     },
                                     "body": null,
@@ -275,10 +275,7 @@ async function getINFO() {
                 reject('no')
             }
         })
-
     }
-
-
 }
 function getINfo() {
     let theURLS = Urls.find({})
@@ -288,7 +285,7 @@ function getINfo() {
         try {
             let body;
             await new Promise((resolve, reject) => {
-                request.get('https://cima4u.mx' + e.url + i + '/', {
+                request.get('https://cimaaa4u.click' + e.url + i + '/', {
                     json: true, "headers": {
                         "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                         "accept-language": "en-US,en;q=0.9",
@@ -303,7 +300,7 @@ function getINfo() {
                         "sec-fetch-user": "?1",
                         "upgrade-insecure-requests": "1",
                         "cookie": "_gid=GA1.2.1577721506.1675807477; _gat_gtag_UA_62776787_1=1; _ga_VX23CCW6PL=GS1.1.1675807476.1.1.1675810433.0.0.0; _ga=GA1.2.1227969633.1675807476",
-                        "Referer": "https://cima4u.mx/category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a-movies7-english/",
+                        "Referer": "https://cimaaa4u.click/category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a-movies7-english/",
                         "Referrer-Policy": "strict-origin-when-cross-origin"
                     },
                     "body": null,

@@ -71,11 +71,11 @@ async function getUrlsFimles() {
     }
 
 }
-getINFO()
+
 
 async function getINFO() {
-
-    let URLS = await Urls.find({ check: { $ne: true }, error: true })
+    console.log('started')
+    let URLS = await Urls.find({ check: { $ne: true }, error: { $ne: true } })
     for (let i = 0; i < URLS.length; i++) {
 
         await new Promise(async (resolve, reject) => {
@@ -244,33 +244,27 @@ async function getINFO() {
                         flime.myvid = myvid
                         flime.upbom = upbom
                         try {
+                            URLS[i].check = true
+                            URLS[i].save()
                             if (myvid || upbom) {
                                 await flime.save()
-                                URLS[i].check = true
-                                await URLS[i].save()
                             }
-
                         } catch (error) {
                             URLS[i].check = true
-                            await URLS[i].save()
-                            console.log('https://cimaaa4u.store/' + URLS[i].url + '/')
-                            console.log(error)
+                            URLS[i].save()
+                            console.log('1')
                         }
-
                         resolve('asd')
-                        console.log('asdasd')
                     } catch (error) {
                         console.log(error)
                         URLS[i].error = true
-
-                        await URLS[i].save()
+                        URLS[i].save()
                         resolve()
                     }
-
                 }
             } catch (error) {
                 URLS[i].error = true
-                await URLS[i].save()
+                URLS[i].save()
                 console.log(error)
                 reject('no')
             }
@@ -337,4 +331,8 @@ function getINfo() {
         }
         e.check = true
     })
+}
+deleteDB()
+function deleteDB() {
+    Urls.deleteMany({ check: false }).then(e => console.log('done'))
 }

@@ -253,86 +253,28 @@ async function getINFO() {
                             URLS[i].check = true
                             URLS[i].save()
                             console.log('1')
+                            reject()
                         }
                         resolve('asd')
                     } catch (error) {
                         console.log(error)
                         URLS[i].error = true
                         URLS[i].save()
+                        console.log('2')
                         resolve()
                     }
                 }
             } catch (error) {
                 URLS[i].error = true
                 URLS[i].save()
-                console.log(error)
+                console.log('3')
                 reject('no')
             }
         })
     }
 }
-function getINfo() {
-    let theURLS = Urls.find({})
 
-    theURLS.forEach(async e => {
 
-        try {
-            let body;
-            await new Promise((resolve, reject) => {
-                request.get('https://cimaaa4u.click' + e.url + i + '/', {
-                    json: true, "headers": {
-                        "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
-                        "accept-language": "en-US,en;q=0.9",
-                        "cache-control": "no-cache",
-                        "pragma": "no-cache",
-                        "sec-ch-ua": "\"Chromium\";v=\"108\", \"Opera GX\";v=\"94\", \"Not)A;Brand\";v=\"99\"",
-                        "sec-ch-ua-mobile": "?0",
-                        "sec-ch-ua-platform": "\"Windows\"",
-                        "sec-fetch-dest": "document",
-                        "sec-fetch-mode": "navigate",
-                        "sec-fetch-site": "same-origin",
-                        "sec-fetch-user": "?1",
-                        "upgrade-insecure-requests": "1",
-                        "cookie": "_gid=GA1.2.1577721506.1675807477; _gat_gtag_UA_62776787_1=1; _ga_VX23CCW6PL=GS1.1.1675807476.1.1.1675810433.0.0.0; _ga=GA1.2.1227969633.1675807476",
-                        "Referer": "https://cimaaa4u.click/category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a-movies7-english/",
-                        "Referrer-Policy": "strict-origin-when-cross-origin"
-                    },
-                    "body": null,
-                }, function (error, res, body2) {
-                    if (error) {
-                        console.log(error)
-                        reject(error)
-                    }
-                    body = body2
-                    resolve(body2)
-                })
-            })
-            if (body) {
-                let document = new jsdom.JSDOM(body, { contentType: "text/html" }).window.document
-                await new Promise((resolve, reject) => {
-                    Array.from(document.querySelectorAll('.PageContent .MovieBlock a')).forEach(async e => {
-                        console.log('asdasd')
-                        try {
-                            await new Urls({
-                                url: e.href.slice(21)
-                            }).save()
-                            console.log(e.href.slice(21))
-                            resolve(e.href.slice(21))
-                        } catch (error) {
-                            console.log(error)
-                            reject(error)
-                        }
-                    })
-                })
-
-            }
-        } catch (error) {
-
-        }
-        e.check = true
-    })
-}
-deleteDB()
 function deleteDB() {
     Urls.deleteMany({ check: false }).then(e => console.log('done'))
 }

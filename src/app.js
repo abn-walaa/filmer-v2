@@ -10,11 +10,11 @@ let Filme = require('./db/module/info')
 const request = require('request');
 async function getUrlsFimles() {
     console.log('hello')
-    for (let i = 1; i < 460; i++) {
+    for (let i = 1; i < 24; i++) {
         try {
             let body;
             await new Promise((resolve, reject) => {
-                request.get('https://cimaaa4u.click/category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a-movies7-english/page/' + i + '/', {
+                request.get('https://cima4u.rocks/category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a/?offset=' + i, {
                     json: true, "headers": {
                         "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                         "accept-language": "en-US,en;q=0.9",
@@ -72,18 +72,16 @@ async function getUrlsFimles() {
 
 }
 
-
+getINFO()
 async function getINFO() {
     console.log('started')
-    let URLS = await Urls.find({ check: { $ne: true }, error: { $ne: true } })
+    let URLS = await Urls.find({ check: { $ne: false } })
     for (let i = 0; i < URLS.length; i++) {
-
         await new Promise(async (resolve, reject) => {
             try {
-                let body;
-                await new Promise((resolve, reject) => {
-                    console.log('https://cimaaa4u.store/' + URLS[i].url + '/')
-                    request.get('https://cimaaa4u.store/' + URLS[i].url + '/', {
+                let body = await new Promise((resolve, reject) => {
+                    // console.log('https://cimaaa4u.store/' + URLS[i].url + '/')
+                    request.get('https://cima4u.rocks/' + URLS[i].url + '/', {
                         json: true, "headers": {
                             "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                             "accept-language": "en-US,en;q=0.9",
@@ -97,25 +95,24 @@ async function getINFO() {
                             "sec-fetch-site": "cross-site",
                             "sec-fetch-user": "?1",
                             "upgrade-insecure-requests": "1",
-                            "cookie": "_gid=GA1.2.714075807.1675780019; _ga_VX23CCW6PL=GS1.1.1675851733.6.1.1675853386.0.0.0; _ga=GA1.2.965091012.1675780019; _gat_gtag_UA_62776787_1=1",
-                            "Referer": "https://www.google.com/",
+
                             "Referrer-Policy": "origin"
                         },
                         "body": null,
                     }, function (error, res, body2) {
                         if (error) {
                             console.log(error)
-                            reject(error)
+                            throw new Error(error)
                         }
-                        body = body2
                         resolve(body2)
                     })
-                }).catch(e => console.log(e))
+                })
+
+
                 if (body) {
                     let flime = new Filme()
                     let document = new jsdom.JSDOM(body, { contentType: "text/html" }).window.document
                     // نوع الفلم
-
                     try {
                         flime.type = document.querySelectorAll('.Breadcrumbs li')[1].textContent
                     } catch (error) {
@@ -140,49 +137,59 @@ async function getINFO() {
                     } catch (error) {
 
                     }
+
                     //  التصنيفات
                     let obj = {};
-                    document.querySelectorAll(' .InformationList li').forEach(e => {
-                        let theText = e.querySelector('span').textContent
-                        let text = e.querySelector('a').textContent
-                        if (theText === "الجودة :") {
-                            obj.jody = text
-                        } else if (theText === "القسم :") {
-                            obj.Ksem = text
-                        } else if (theText === "السنة :") {
-                            obj.year = text
-                        } else if (theText === "النوع :") {
-                            obj.types = []
-                            e.querySelectorAll('a').forEach(e => {
-                                obj.types.push({ name: e.textContent })
-                            })
-                        } else if (theText === "السنة :") {
-                            obj.year = text
-                        }
-                    })
-                    console.log(obj.types)
-                    flime.dataFilm.q = obj.jody
-                    flime.dataFilm.section = obj.Ksem
-                    flime.dataFilm.types = obj.types
-                    flime.dataFilm.year = obj.year
+                    try {
+                        document.querySelectorAll(' .InformationList li').forEach(e => {
+                            let theText = e.querySelector('span').textContent
+                            let text = e.querySelector('a').textContent
+                            if (theText === "الجودة :") {
+                                obj.jody = text
+                            } else if (theText === "القسم :") {
+                                obj.Ksem = text
+                            } else if (theText === "السنة :") {
+                                obj.year = text
+                            } else if (theText === "النوع :") {
+                                obj.types = []
+                                e.querySelectorAll('a').forEach(e => {
+                                    obj.types.push({ name: e.textContent })
+                                })
+                            } else if (theText === "السنة :") {
+                                obj.year = text
+                            }
+                        })
+
+                        flime.dataFilm.q = obj.jody
+                        flime.dataFilm.section = obj.Ksem
+                        flime.dataFilm.types = obj.types
+                        flime.dataFilm.year = obj.year
+                    } catch (error) {
+
+                    }
                     // فريق العمل
                     let team = []
 
-                    document.querySelectorAll('ul.Teamwork li').forEach(async e => {
-                        await new Promise(async (resolve, reject) => {
-                            try {
-                                let theName = e.querySelector('span').textContent
-                                let urlPic = e.querySelector('img').src
-                                team.push({ name: theName, pic: urlPic })
-                                resolve('ok')
-                            } catch (error) {
-                                URLS[i].error = true
+                    try {
+                        document.querySelectorAll('ul.Teamwork li').forEach(async e => {
+                            await new Promise(async (resolve, reject) => {
+                                try {
+                                    let theName = e.querySelector('span').textContent
+                                    let urlPic = e.querySelector('img').src
+                                    team.push({ name: theName, pic: urlPic })
+                                    resolve('ok')
+                                } catch (error) {
+                                    console.log(error)
+                                    URLS[i].error = true
 
-                                await URLS[i].save()
-                                reject('no')
-                            }
-                        }).catch(e => console.log(e))
-                    })
+                                    await URLS[i].save()
+                                    reject('no')
+                                }
+                            }).catch(e => console.log(e))
+                        })
+                    } catch (error) {
+
+                    }
                     flime.Teams = team
 
                     // // code imdb
@@ -191,10 +198,11 @@ async function getINFO() {
                     // 
 
                     try {
-                        await new Promise((resolve, reject) => {
+                        let body3 = await new Promise((resolve, reject) => {
                             try {
+
                                 request.get(document.querySelector('.SingleContentSide a:nth-child(3)').href, {
-                                    json: true, "headers": {
+                                    "headers": {
                                         "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                                         "accept-language": "en-US,en;q=0.9",
                                         "cache-control": "no-cache",
@@ -214,63 +222,69 @@ async function getINFO() {
                                     "body": null,
                                 }, function (error, res, body2) {
                                     if (error) {
-                                        URLS[i].error = true
-                                        reject(error)
+                                        throw new Error(error)
                                     }
-                                    body = body2
+
                                     resolve(body2)
                                 })
                             } catch (error) {
-                                URLS[i].error = true
-                                URLS[i].save()
+                                throw new Error(error)
                                 reject(error)
                             }
                         }).catch(async e => {
-                            URLS[i].error = true
+                            throw new Error(error)
                         })
-                        let document2 = new jsdom.JSDOM(body, { contentType: "text/html" }).window.document
+
+                        document = new jsdom.JSDOM(body3, { contentType: "text/html" }).window.document
                         // رابط التحميل من myvid
                         console.log('--------')
                         let myvid;
                         let upbom;
-                        document2.querySelectorAll('.DownloadServers div').forEach(e => {
-                            let theText = e.textContent
-                            if (theText === " Myvid ") {
-                                myvid = e.querySelector('a').href
-                            } else if (theText === " UpBom ") {
-                                upbom = e.querySelector('a').href
-                            }
-                        })
+
+                        try {
+                            document.querySelectorAll('.DownloadServers div').forEach(e => {
+                                let theText = e.textContent.trim().toLocaleLowerCase()
+                                console.log(e.querySelector('a').href)
+                                if (theText === " Myvid " || theText == "myvid") {
+                                    myvid = e.querySelector('a').href
+                                } else if (theText === " UpBom " || theText == "upbom" || theText == "upbam") {
+                                    upbom = e.querySelector('a').href
+                                }
+                            })
+                        } catch (error) {
+
+                        }
                         flime.myvid = myvid
                         flime.upbom = upbom
+                        console.log(myvid, upbom)
+                        console.log('--------')
+                        console.log(flime)
                         try {
-                            URLS[i].check = true
-                            URLS[i].save()
+
                             if (myvid || upbom) {
                                 await flime.save()
+                                URLS[i].check = true
+                                await URLS[i].save()
                             }
+
                         } catch (error) {
                             URLS[i].check = true
-                            URLS[i].save()
-                            console.log('1')
+                            URLS[i].save().catch(e => e)
+                            throw new Error(error)
+
                             reject()
                         }
                         resolve('asd')
                     } catch (error) {
-                        console.log(error)
-                        URLS[i].error = true
-                        URLS[i].save()
-                        console.log('2')
+                        throw new Error(error)
                         resolve()
                     }
                 }
             } catch (error) {
-                URLS[i].error = true
-                URLS[i].save()
-                console.log('3')
-                reject('no')
+                console.log(error)
+                reject('no2')
             }
-        })
+        }).catch(e => e)
     }
 }
 

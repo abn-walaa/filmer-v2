@@ -13,6 +13,10 @@ let sac = new mongooes.Schema({
     error: {
         type: Boolean,
         default: false
+    },
+    justMain: {
+        type: Boolean,
+        default: true
     }
 })
 

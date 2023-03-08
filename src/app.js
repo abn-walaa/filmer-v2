@@ -8,13 +8,14 @@ let Filme = require('./db/module/info')
 
 
 const request = require('request');
+getUrlsFimles()
 async function getUrlsFimles() {
-    console.log('hello')
-    for (let i = 1; i < 24; i++) {
+
+    for (let i = 1; i < 143; i++) {
         try {
             let body;
             await new Promise((resolve, reject) => {
-                request.get('https://cima4u.rocks/category/%d8%a7%d9%81%d9%84%d8%a7%d9%85-%d8%a7%d8%ac%d9%86%d8%a8%d9%8a/?offset=' + i, {
+                request.get('https://tv.cima4u1.store/25.%D9%85%D8%B3%D9%84%D8%B3%D9%84%D8%A7%D8%AA+%D8%A7%D8%AC%D9%86%D8%A8%D9%89.html?PageID=' + i, {
                     json: true, "headers": {
                         "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                         "accept-language": "en-US,en;q=0.9",
@@ -48,15 +49,15 @@ async function getUrlsFimles() {
                     await new Promise(async (resolve, reject) => {
                         try {
                             let urls = new Urls({
-                                url: e.href.slice(21)
+                                url: e.href
                             })
                             try {
                                 await urls.save()
                             } catch (error) {
 
                             }
-                            console.log(e.href.slice(21))
-                            resolve(e.href.slice(21))
+                            console.log(e.href)
+                            resolve(e.href)
                         } catch (error) {
                             console.log(error)
                             reject(error)
@@ -72,10 +73,10 @@ async function getUrlsFimles() {
 
 }
 
-getINFO()
+
 async function getINFO() {
     console.log('started')
-    let URLS = await Urls.find({ check: { $ne: false } })
+    let URLS = await Urls.find({ check: { $ne: false } }, {}, { skip: 17000 })
     for (let i = 0; i < URLS.length; i++) {
         await new Promise(async (resolve, reject) => {
             try {
@@ -235,7 +236,7 @@ async function getINFO() {
                             throw new Error(error)
                         })
 
-                        document = new jsdom.JSDOM(body3, { contentType: "text/html" }).window.document
+                        document = new jsdom.JSDOM(body3, { contentType: "text/html", resources: "usable" }).window.document
                         // رابط التحميل من myvid
                         console.log('--------')
                         let myvid;
@@ -291,4 +292,9 @@ async function getINFO() {
 
 function deleteDB() {
     Urls.deleteMany({ check: false }).then(e => console.log('done'))
+}
+
+
+function getURL() {
+
 }

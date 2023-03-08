@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+</head>
+
+<body>
+    <script src="http://unpkg.com/metaapi.cloud-sdk/index.js"></script>
+    <script>
+
+
+        const token = 'eyJhbGciOiJSUzUxMiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJlMjk4MDRmODg4ODllNmRmOWU3ODRjNWJlZDllMGMyYSIsInBlcm1pc3Npb25zIjpbXSwidG9rZW5JZCI6IjIwMjEwMjEzIiwiaW1wZXJzb25hdGVkIjpmYWxzZSwicmVhbFVzZXJJZCI6ImUyOTgwNGY4ODg4OWU2ZGY5ZTc4NGM1YmVkOWUwYzJhIiwiaWF0IjoxNjc4Mjg3NjYxfQ.Pc8GxrRsVufOY3bNO3oTjYWuMoOUU5pU8Z-uiK-Aindi1Fkp_omFkAPnoNANbcL2hagHtptzQavRqsWqTR464hEpJX6MiBIn36mWUuDgcCEK9yaycnp4RXfWzcquCuw9dsJGrZJqYoWV6KjkO3rdi8YFujNwyQ41d8OpFGk7veeRU7SQvW2LQuxSUiysHoyrJ8VgLb5k5dncpNwuIIVW8ZIhp9P85Eoy5p_75k5lM6dVeEOz9dtW85YTxeFk8SI9YpCv6h-6WaJkxOLpJDulYIq-SmyGX6yTT3vBMRU8TUTeLDxKkb0gahGeqQcsYo6XI7vNSWd8_s-yjX_l7yvL4zxP9IslV5BTdG5grgfFle6tDjbVooxv5oOq2_D090E-8nbIYrjRtcB69x-iReag51JnPBUn2IxARlJ-rDqZsAWKo-umY3v3gNFPuY7hm5OGfg854ETWIeD-9R7SjZiTYMXWZ_0L3efmAfZkO6MGHSYOQZL5FFDLatOMxhtiPLUyisKX-m-u_p_Q5cqwNFktQkqZr4xAEfv1eapuv84yxcX7hrcPZCQ3nWwjCiEY7dUwTT_koghfZUN0okdi-d28IMzqvwKIz-bW-UG3AQw_iQuhu1cKl8suKBkxWMx0CQnUpsiUV9PzLFV8TjbmQoNoOeIE4MrxlspAgQV0P_1h4es';
+        const api = new MetaApi(token);
+        async function a() {
+            let account = await api.metatraderAccountApi.getAccount();
+            let accountAccessToken = account.accessToken;
+            console.log(accountAccessToken);
+        }
+        a()
+    </script>
+</body>
+
+</html>

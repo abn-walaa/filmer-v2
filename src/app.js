@@ -10,12 +10,13 @@ let Filme = require('./db/module/info')
 const request = require('request');
 getUrlsFimles()
 async function getUrlsFimles() {
-
-    for (let i = 1; i < 143; i++) {
+    // let url3 = await Urls.find({ check: false, justMain: true })
+    for (let i = 1; i <= 8; i++) {
         try {
+
             let body;
             await new Promise((resolve, reject) => {
-                request.get('https://tv.cima4u1.store/25.%D9%85%D8%B3%D9%84%D8%B3%D9%84%D8%A7%D8%AA+%D8%A7%D8%AC%D9%86%D8%A8%D9%89.html?PageID=' + i, {
+                request.get('https://tv.cima4u1.site/23.مسلسلات+هندية+مترجمة.html?PageID=' + i, {
                     json: true, "headers": {
                         "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
                         "accept-language": "en-US,en;q=0.9",
@@ -49,23 +50,55 @@ async function getUrlsFimles() {
                     await new Promise(async (resolve, reject) => {
                         try {
                             let urls = new Urls({
-                                url: e.href
+                                url: e.href.slice(24)
                             })
                             try {
                                 await urls.save()
                             } catch (error) {
 
                             }
-                            console.log(e.href)
-                            resolve(e.href)
+                            console.log(e.href.slice(24))
+                            resolve(e.href.slice(24))
                         } catch (error) {
                             console.log(error)
                             reject(error)
                         }
                     })
                 })
+                //     document.querySelectorAll('.SeasonsSectionsList a').forEach(async e => {
+                //         try {
+                //             let urls = new Urls({
+                //                 url: e.href
+                //             })
+                //             console.log(urls)
+                //             try {
+                //                 await urls.save()
+                //             } catch (error) {
+
+                //             }
+                //         } catch (error) {
+
+                //         }
+                //     })
+                //     document.querySelectorAll('.EpisodesSectionMaster .EpisodeItem a').forEach(async e => {
+                //         try {
+                //             let urls = new Urls({
+                //                 url: e.href,
+                //                 justMain: false
+                //             })
+                //             console.log(urls)
+                //             try {
+                //                 await urls.save()
+                //             } catch (error) {
+
+                //             }
+                //         } catch (error) {
+
+                //         }
+                //     })
 
             }
+            console.log(i)
         } catch (error) {
 
         }
@@ -292,9 +325,4 @@ async function getINFO() {
 
 function deleteDB() {
     Urls.deleteMany({ check: false }).then(e => console.log('done'))
-}
-
-
-function getURL() {
-
 }

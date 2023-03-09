@@ -413,6 +413,7 @@ async function tvinfo() {
                 let t = document.querySelector('.SingleContent h1').textContent
                 t = t.replace(" - ال", " ");
                 t = t.replace(" رقم", "")
+                t = t.replace("حلقة", "حلقه")
                 flime.title = t
             } catch (error) {
 

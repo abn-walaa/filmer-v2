@@ -8,7 +8,7 @@ let sac = new mongooes.Schema({
     },
     type: {
         type: String,
-        required: true,
+
     },
     pic: {
         type: String,

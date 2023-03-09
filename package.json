@@ -9,6 +9,7 @@
     "metaapi.cloud-sdk": "^20.11.5",
     "mongoose": "^6.8.4",
     "node-fetch": "^2.6.8",
+    "node-telegram-bot-api": "^0.61.0",
     "nodemon": "^2.0.20",
     "proxifly": "^1.0.21",
     "request": "^2.88.2"

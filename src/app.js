@@ -5,7 +5,8 @@ require('./db/conntion')
 // موديل الخاص بالروابط
 let Urls = require('./db/module/urls')
 let Filme = require('./db/module/info')
-
+const TelegramBot = require('node-telegram-bot-api');
+const bot = new TelegramBot('6211775853:AAG0CBFchxUizx1kfeWsktBWGnWGyz5AR7U', { polling: true });
 
 const request = require('request');
 
@@ -329,7 +330,7 @@ function deleteDB() {
 tvinfo()
 async function tvinfo() {
 
-    let URLS = await Urls.find({ justMain: false })
+    let URLS = await Urls.find({ check: false, justMain: false })
     console.log(URLS.length)
     for (let i = 0; i < URLS.length; i++) {
         try {
@@ -422,11 +423,12 @@ async function tvinfo() {
                     await flime.save()
                     URLS[i].check = true
                     await URLS[i].save()
+                    await bot.sendMessage(-1001851288193, flime.title);
                 }
 
             } catch (error) {
                 URLS[i].check = true
-                URLS[i].save().catch(e => e)
+                await URLS[i].save()
                 throw new Error(error)
             }
         } catch (error) {
